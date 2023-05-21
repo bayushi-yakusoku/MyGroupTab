@@ -49,10 +49,25 @@ chrome.tabs.onCreated.addListener(
             const openerTab = await chrome.tabs.get(tab.openerTabId);
 
             if (tab.groupId == -1 && openerTab.groupId == -1) {
-                console.log("Need to create new group");
-
                 const groupMulti = await chrome.tabs.group({ tabIds: [tab.id, openerTab.id] });
             }
         }
+    }
+);
+
+chrome.tabs.onRemoved.addListener(
+    async (tabId, removeInfo) => {
+
+        tabGroups = [];
+
+        chrome.tabGroups.query(
+            { windowId: removeInfo.windowId },
+            (group) => {
+                console.log(group) // output is array of all groups
+                tabGroups = group;
+            }
+        );
+
+        console.log("pouf");
     }
 );
