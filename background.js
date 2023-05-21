@@ -62,12 +62,13 @@ chrome.tabs.onRemoved.addListener(
 
         chrome.tabGroups.query(
             { windowId: removeInfo.windowId },
-            (group) => {
-                console.log(group) // output is array of all groups
-                tabGroups = group;
-            }
+            CheckWindowTabGroups
         );
-
-        console.log("pouf");
     }
 );
+
+function CheckWindowTabGroups(tabGroups) {
+    for (let i = 0; i < tabGroups.length; i++) {
+        console.log(tabGroups[i]);
+    }
+}
